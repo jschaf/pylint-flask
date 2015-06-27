@@ -1,0 +1,13 @@
+sudo: false
+language: python
+python:
+  - "2.6"
+  - "2.7"
+  - "3.3"
+  - "3.4"
+install:
+  scripts/travis-install.sh
+script:
+  scripts/travis-build.sh
+after_success:
+  coveralls
