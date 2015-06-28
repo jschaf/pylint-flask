@@ -1,2 +1,2 @@
 [run]
-source=pylint_werkzeug
+source=pylint_flask
