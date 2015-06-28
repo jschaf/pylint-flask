@@ -1,7 +1,7 @@
 pylint-flask
 ===============
 
-[![Build Status](https://travis-ci.org/jschaf/pylint-flask.svg?branch=master)](https://travis-ci.org/jschaf/pylint-flask) [![Coverage Status](https://coveralls.io/repos/jschaf/pylint-flask/badge.svg)](https://coveralls.io/r/jschaf/pylint-flask)
+[![Build Status](https://travis-ci.org/jschaf/pylint-flask.svg?branch=master)](https://travis-ci.org/jschaf/pylint-flask) [![Coverage Status](https://coveralls.io/repos/jschaf/pylint-flask/badge.svg)](https://coveralls.io/r/jschaf/pylint-flask) [![License](https://img.shields.io/badge/license-GPLv2%20License-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
 
 ## About
 
