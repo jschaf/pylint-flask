@@ -1,5 +1,5 @@
 #!/bin/bash
-pip install --use-mirrors coverage coveralls
-pip install --use-mirrors flask
-pip install --use-mirrors git+https://github.com/landscapeio/pylint-plugin-utils.git@develop
-pip install --use-mirrors --editable .
+pip install coverage coveralls
+pip install -r dev-requirements.txt
+pip install git+https://github.com/landscapeio/pylint-plugin-utils.git@develop
+pip install --editable .
