@@ -44,6 +44,20 @@ pip install pylint-flask
 pylint --load-plugins pylint_flask [..your module..]
 ```
 
+## Contributing
+
+Pull requests are always welcome.  Here's an outline of the steps you need to
+prepare your code.
+
+1. https://github.com/jschaf/pylint-flask.git
+2. cd pylint-flask
+3. mkvirtualenv pylint-flask
+4. pip install -r dev-requirements.txt
+5. git checkout -b MY-NEW-FIX
+6. Hack away
+7. git push origin MY-NEW-FIX
+8. Create a pull request
+
 ## License
 
 pylint-flask is available under the GPLv2 license.
