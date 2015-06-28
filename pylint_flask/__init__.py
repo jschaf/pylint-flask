@@ -34,6 +34,16 @@ def is_transformed(node):
     return getattr(node, 'pylint_flask_was_transformed', False)
 
 
+def make_non_magical_flask_import(flask_ext_name):
+    '''Convert a flask.ext.admin into flask_admin.'''
+    match = re.match(r'flask\.ext\.(.*)', flask_ext_name)
+    if match is None:
+        raise LookupError("Module name `{}` doesn't match `flask.ext` style import.")
+    from_name = match.group(1)
+    actual_module_name = 'flask_{}'.format(from_name)
+    return actual_module_name
+
+
 def transform_flask_from_import(node):
     '''Translates a flask.ext from-style import into a non-magical import.
 
@@ -44,6 +54,12 @@ def transform_flask_from_import(node):
 
     '''
     new_names = []
+    # node.names is a list of 2-tuples. Each tuple consists of (name, as_name).
+    # So, the import would be represented as:
+    #
+    #    from flask.ext import wtf as ftw, admin
+    #
+    # node.names = [('wtf', 'ftw'), ('admin', None)]
     for (name, as_name) in node.names:
         actual_module_name = 'flask_{}'.format(name)
         new_names.append((actual_module_name, as_name or name))
@@ -76,9 +92,7 @@ def transform_flask_from_long(node):
         from flask_admin.model import InlineFormAdmin
 
     '''
-    match = re.match(r'flask\.ext\.(.*)', node.modname)
-    from_name = match.group(1)
-    actual_module_name = 'flask_{}'.format(from_name)
+    actual_module_name = make_non_magical_flask_import(node.modname)
     new_node = nodes.From(actual_module_name, node.names, node.level)
     copy_node_info(node, new_node)
     mark_transformed(new_node)
