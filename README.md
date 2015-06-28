@@ -55,6 +55,7 @@ prepare your code.
 4. pip install -r dev-requirements.txt
 5. git checkout -b MY-NEW-FIX
 6. Hack away
+7. Make sure everything is green by running `tox`
 7. git push origin MY-NEW-FIX
 8. Create a pull request
 
