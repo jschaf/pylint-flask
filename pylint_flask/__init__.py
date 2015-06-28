@@ -1,10 +1,8 @@
 '''pylint_flask module'''
 
 from astroid import MANAGER
-from astroid.builder import AstroidBuilder
 from astroid import nodes
 import re
-import textwrap
 
 
 def register(_):
@@ -29,6 +27,7 @@ def copy_node_info(src, dest):
 def mark_transformed(node):
     '''Mark a node as transformed so we don't process it multiple times.'''
     node.pylint_flask_was_transformed = True
+
 
 def is_transformed(node):
     '''Return True if `node` was already transformed.'''
@@ -66,7 +65,7 @@ MANAGER.register_transform(nodes.From,
                            is_flask_from_import)
 
 
-def transform_flask_from_import_long(node):
+def transform_flask_from_long(node):
     '''Translates a flask.ext.wtf from-style import into a non-magical import.
 
     Translates:
@@ -77,7 +76,7 @@ def transform_flask_from_import_long(node):
         from flask_admin.model import InlineFormAdmin
 
     '''
-    match = re.match('flask\.ext\.(.*)', node.modname)
+    match = re.match(r'flask\.ext\.(.*)', node.modname)
     from_name = match.group(1)
     actual_module_name = 'flask_{}'.format(from_name)
     new_node = nodes.From(actual_module_name, node.names, node.level)
@@ -92,9 +91,8 @@ def is_flask_from_import_long(node):
     return not is_transformed(node) and node.modname.startswith('flask.ext.')
 
 MANAGER.register_transform(nodes.From,
-                           transform_flask_from_import_long,
+                           transform_flask_from_long,
                            is_flask_from_import_long)
-
 
 
 def transform_flask_bare_import(node):
@@ -108,7 +106,7 @@ def transform_flask_bare_import(node):
 
     new_names = []
     for (name, as_name) in node.names:
-        match = re.match('flask\.ext\.(.*)', name)
+        match = re.match(r'flask\.ext\.(.*)', name)
         from_name = match.group(1)
         actual_module_name = 'flask_{}'.format(from_name)
         new_names.append((actual_module_name, as_name))
@@ -118,6 +116,7 @@ def transform_flask_bare_import(node):
     new_node.names = new_names
     mark_transformed(new_node)
     return new_node
+
 
 def is_flask_bare_import(node):
     '''Check if an import is like `import flask.ext.admin as admin`.'''
