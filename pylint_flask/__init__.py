@@ -61,6 +61,10 @@ def is_flask_from_import(node):
     # Check for transformation first so we don't double process
     return not is_transformed(node) and node.modname == 'flask.ext'
 
+MANAGER.register_transform(nodes.From,
+                           transform_flask_from_import,
+                           is_flask_from_import)
+
 
 def transform_flask_from_import_long(node):
     '''Translates a flask.ext.wtf from-style import into a non-magical import.
@@ -88,9 +92,38 @@ def is_flask_from_import_long(node):
     return not is_transformed(node) and node.modname.startswith('flask.ext.')
 
 MANAGER.register_transform(nodes.From,
-                           transform_flask_from_import,
-                           is_flask_from_import)
-
-MANAGER.register_transform(nodes.From,
                            transform_flask_from_import_long,
                            is_flask_from_import_long)
+
+
+
+def transform_flask_bare_import(node):
+    '''Translates a flask.ext.wtf bare import into a non-magical import.
+
+    Translates:
+        import flask.ext.admin as admin
+    Into:
+        import flask_admin as admin
+    '''
+
+    new_names = []
+    for (name, as_name) in node.names:
+        match = re.match('flask\.ext\.(.*)', name)
+        from_name = match.group(1)
+        actual_module_name = 'flask_{}'.format(from_name)
+        new_names.append((actual_module_name, as_name))
+
+    new_node = nodes.Import()
+    copy_node_info(node, new_node)
+    new_node.names = new_names
+    mark_transformed(new_node)
+    return new_node
+
+def is_flask_bare_import(node):
+    '''Check if an import is like `import flask.ext.admin as admin`.'''
+    return (not is_transformed(node)
+            and any(['flask.ext' in pair[0] for pair in node.names]))
+
+MANAGER.register_transform(nodes.Import,
+                           transform_flask_bare_import,
+                           is_flask_bare_import)
