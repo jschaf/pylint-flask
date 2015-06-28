@@ -38,7 +38,8 @@ def make_non_magical_flask_import(flask_ext_name):
     '''Convert a flask.ext.admin into flask_admin.'''
     match = re.match(r'flask\.ext\.(.*)', flask_ext_name)
     if match is None:
-        raise LookupError("Module name `{}` doesn't match `flask.ext` style import.")
+        raise LookupError("Module name `{}` doesn't match"
+                          "`flask.ext` style import.")
     from_name = match.group(1)
     actual_module_name = 'flask_{}'.format(from_name)
     return actual_module_name
