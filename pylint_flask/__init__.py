@@ -13,17 +13,33 @@ def register(_):
     '''
     pass
 
+def copy_node_info(src, dest):
+    """Copy information from src to dest
 
-def flask_transform(node):
-    '''Replace Flask module with the imports it lazily loads.'''
+    Every node in the AST has to have line number information.  Get
+    the information from the old stmt."""
+    for attr in ['lineno', 'fromlineno', 'tolineno',
+                 'col_offset', 'parent']:
+        if hasattr(src, attr):
+            setattr(dest, attr, getattr(src, attr))
+
+def transform_flask_from_import(node):
+    '''Translates a flask.ext from-style import into a regular, non-magical import.
+
+    Translates:
+        from flask.ext import wtf, bcrypt as fcrypt
+    Into:
+        import flask_wtf as wtf, flask_bcrypt as fcrypt
+
+    '''
+    new_names = []
+    for (name, as_name) in node.names:
+        actual_module_name = 'flask_{}'.format(name)
+        new_names.append((actual_module_name, as_name or name))
+
     new_node = nodes.Import()
-    new_node.names = [('flask_wtf', 'wtf')]
-    new_node.lineno = node.lineno
-    new_node.fromlineno = node.fromlineno
-    new_node.tolineno = node.tolineno
-    new_node.col_offset = node.col_offset
-    new_node.parent = node.parent
-
+    copy_node_info(node, new_node)
+    new_node.names = new_names
     return new_node
 
 def flask_transform_long_mod_name():
@@ -31,10 +47,10 @@ def flask_transform_long_mod_name():
     # from flask.ext.wtf import Form
     # from flask_wtf import Form
 
-def is_flask_module(node):
+def is_flask_from_import(node):
     '''Predicate for checking if we have the flask module.'''
     return node.modname == 'flask.ext'
 
 MANAGER.register_transform(nodes.From,
-                           flask_transform,
-                           is_flask_module)
+                           transform_flask_from_import,
+                           is_flask_from_import)

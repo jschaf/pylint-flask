@@ -2,3 +2,4 @@ logilab-common==0.63.2
 pylint==1.4.3
 Flask==0.10.1
 Flask-WTF==0.11
+Flask-Bcrypt==0.6.2
