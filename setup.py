@@ -7,8 +7,8 @@ import sys
 _version = '0.1'
 _packages = find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"])
 
-_short_description = "pylint-flask is a Pylint plugin to aid Pylint in recognising and understanding" \
-                     "errors caused when using Flask"
+_short_description = "pylint-flask is a Pylint plugin to aid Pylint in \
+recognizing and understanding errors caused when using Flask"
 
 
 _classifiers = (
@@ -20,6 +20,7 @@ _classifiers = (
     'Programming Language :: Python :: 2.7',
     'Programming Language :: Python :: 3.3',
     'Programming Language :: Python :: 3.4',
+    'Programming Language :: Python :: 3.5'
 )
 
 

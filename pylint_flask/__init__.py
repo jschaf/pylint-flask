@@ -6,9 +6,8 @@ import re
 
 
 def register(_):
-    '''register is expected by pylint for plugins, but we are creating a transform,
-     not registering a checker.
-
+    '''register is expected by pylint for plugins, but we are creating a
+    transform, not registering a checker.
     '''
     pass
 
@@ -135,8 +134,8 @@ def transform_flask_bare_import(node):
 
 def is_flask_bare_import(node):
     '''Check if an import is like `import flask.ext.admin as admin`.'''
-    return (not is_transformed(node)
-            and any(['flask.ext' in pair[0] for pair in node.names]))
+    return (not is_transformed(node) and
+            any(['flask.ext' in pair[0] for pair in node.names]))
 
 MANAGER.register_transform(nodes.Import,
                            transform_flask_bare_import,
