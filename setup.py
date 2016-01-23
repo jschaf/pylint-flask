@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 from distutils.core import setup
-from setuptools import find_packages
 import sys
 
 
 _version = '0.2'
-_packages = find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"])
+_packages = ['pylint_flask']
 
 _short_description = "pylint-flask is a Pylint plugin to aid Pylint in \
 recognizing and understanding errors caused when using Flask"
@@ -53,6 +52,8 @@ setup(
     packages=_packages,
     install_requires=_install_requires,
     license='GPLv2',
+    download_url=("https://github.com/jschaf/pylint-flask/tarball/v" +
+                  str(_version)),
     classifiers=_classifiers,
     keywords='pylint flask plugin'
 )
