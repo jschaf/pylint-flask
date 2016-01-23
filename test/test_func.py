@@ -1,14 +1,11 @@
 import os
 import unittest
-from logilab.common import testlib
 from pylint.testutils import make_tests, LintTestUsingFile, cb_test_gen, linter
 
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 linter.load_plugin_modules(['pylint_flask'])
-# remove required __revision__
-linter.global_set_option('required-attributes', ())
 
 
 def module_exists(module_name):
@@ -35,9 +32,9 @@ def suite():
     if module_exists('rest_framework'):
         test_list += tests('external_drf', '')
 
-    return testlib.TestSuite(
-        [unittest.makeSuite(test, suiteClass=testlib.TestSuite)
+    return unittest.TestSuite(
+        [unittest.makeSuite(test, suiteClass=unittest.TestSuite)
          for test in test_list])
 
 if __name__ == '__main__':
-    testlib.unittest_main(defaultTest='suite')
+    unittest.main(defaultTest='suite')
