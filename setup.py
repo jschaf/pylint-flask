@@ -4,7 +4,7 @@ from setuptools import find_packages
 import sys
 
 
-_version = '0.1'
+_version = '0.2'
 _packages = find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"])
 
 _short_description = "pylint-flask is a Pylint plugin to aid Pylint in \
