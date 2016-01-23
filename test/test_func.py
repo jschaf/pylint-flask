@@ -6,7 +6,10 @@ from pylint.testutils import make_tests, LintTestUsingFile, cb_test_gen, linter
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 linter.load_plugin_modules(['pylint_flask'])
-
+# remove required __revision__
+linter.global_set_option('required-attributes', ())
+# We need to ensure that pylint_flask works for multiple modules on one line
+linter.global_set_option('disable', "multiple-imports")
 
 def module_exists(module_name):
     try:
