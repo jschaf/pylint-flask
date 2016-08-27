@@ -33,13 +33,11 @@ if sys.version_info < (2, 7):
     _install_requires += [
         'pylint>=1.0,<1.4',
         'astroid>=1.0,<1.3.0',
-        'logilab-common>=0.60.0,<0.63',
     ]
 else:
     _install_requires += [
         'pylint>=1.0',
         'astroid>=1.0',
-        'logilab-common>=0.60.0',
     ]
 
 setup(
