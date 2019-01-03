@@ -76,7 +76,7 @@ def is_flask_from_import(node):
     # Check for transformation first so we don't double process
     return not is_transformed(node) and node.modname == 'flask.ext'
 
-MANAGER.register_transform(nodes.From,
+MANAGER.register_transform(nodes.ImportFrom,
                            transform_flask_from_import,
                            is_flask_from_import)
 
@@ -104,7 +104,7 @@ def is_flask_from_import_long(node):
     # Check for transformation first so we don't double process
     return not is_transformed(node) and node.modname.startswith('flask.ext.')
 
-MANAGER.register_transform(nodes.From,
+MANAGER.register_transform(nodes.ImportFrom,
                            transform_flask_from_long,
                            is_flask_from_import_long)
 
