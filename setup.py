@@ -3,7 +3,7 @@ from distutils.core import setup
 import sys
 
 
-_version = '0.5'
+_version = '0.6'
 _packages = ['pylint_flask']
 
 _short_description = "pylint-flask is a Pylint plugin to aid Pylint in \
