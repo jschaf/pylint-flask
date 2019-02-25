@@ -34,6 +34,12 @@ if sys.version_info < (2, 7):
         'pylint>=1.0,<1.4',
         'astroid>=1.0,<1.3.0',
     ]
+elif sys.version_info < (3, 0):
+    # pylint 2.0 dropped support for Python 2.7
+    _install_requires += [
+        'pylint>=1.0,<2.0',
+        'astroid>=1.0,<2.0',
+    ]
 else:
     _install_requires += [
         'pylint>=1.0',
