@@ -9,7 +9,6 @@ def register(_):
     """register is expected by pylint for plugins, but we are creating a
     transform, not registering a checker.
     """
-    pass
 
 
 def copy_node_info(src, dest):
